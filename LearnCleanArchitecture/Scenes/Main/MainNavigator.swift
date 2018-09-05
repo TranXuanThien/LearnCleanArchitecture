@@ -20,8 +20,8 @@ struct MainNavigator: MainNavigatorType {
     unowned let navigationController: UINavigationController
     
     func toProducts() {
-//        let vc: ProductsViewController = assembler.resolve(navigationController: navigationController)
-//        navigationController.pushViewController(vc, animated: true)
+        let vc: ProductViewController = assembler.resolve(navigationController: navigationController)
+        navigationController.pushViewController(vc, animated: true)
     }
     
     func toSectionedProducts() {

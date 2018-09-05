@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Then
 
 struct Product {
     var id: Int
@@ -20,4 +21,4 @@ extension Product {
     }
 }
 
-//extension Product: Then, HasID, Hashable { }
+extension Product: Then, HasID, Hashable { }
