@@ -6,7 +6,7 @@
 //  Copyright © 2018 tran.xuan.thien. All rights reserved.
 //
 
-protocol Assembler: class, AppAssembler, MainAssembler, ProductsAssembler
+protocol Assembler: class, AppAssembler, MainAssembler, ProductAssembler, RepositoriesAssembler
 {
     
 }

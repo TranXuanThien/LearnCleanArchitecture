@@ -202,11 +202,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "LearnCleanArchitecture/Scenes/Main/MenuCell.swift"
-            timestampString = "557313940.892589"
+            timestampString = "557911906.0630291"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "23"
-            endingLineNumber = "23"
+            startingLineNumber = "22"
+            endingLineNumber = "22"
             landmarkName = "configView(with:)"
             landmarkType = "7">
          </BreakpointContent>

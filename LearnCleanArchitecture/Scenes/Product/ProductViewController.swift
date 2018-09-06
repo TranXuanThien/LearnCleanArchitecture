@@ -8,30 +8,45 @@
 
 import UIKit
 
-class ProductViewController: UIViewController {
+class ProductViewController: UIViewController, BindableType {
+    var viewModel: ProductViewModel!
 
-    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var tableView: LoadMoreTableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        configView()
     }
 
+    func configView() {
+        tableView.do {
+            $0.estimatedRowHeight = 550
+            $0.rowHeight = UITableViewAutomaticDimension
+            $0.register(cellType: ProductCell.self)
+        }
+        tableView.rx
+            .setDelegate(self)
+            .disposed(by: rx.disposeBag)
+    }
+    
+    func bindViewModel() {
+        
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
+}
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+// MARK: - UITableViewDelegate
+extension ProductViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
     }
-    */
+}
 
+// MARK: - StoryboardSceneBased
+extension ProductViewController: StoryboardSceneBased {
+    static var sceneStoryboard = Storyboards.product
 }

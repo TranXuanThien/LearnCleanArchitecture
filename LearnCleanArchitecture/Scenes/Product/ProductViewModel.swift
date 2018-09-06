@@ -25,17 +25,40 @@ struct ProductViewModel: ViewModelType {
         let loadingMore: Driver<Bool>
         let fetchItems: Driver<Void>
         let productList: Driver<[ProductModel]>
-        let selectedProduct: Driver<Void>
-        let editedProduct: Driver<Void>
+//        let selectedProduct: Driver<Void>
+//        let editedProduct: Driver<Void>
         let isEmptyData: Driver<Bool>
-        let deletedProduct: Driver<Void>
+//        let deletedProduct: Driver<Void>
     }
     
     struct ProductModel {
         let product: Product
     }
     
+    let navigator: ProductNavigatorType
+    let useCase: ProductUseCaseType
+    
     func transform(_ input: ProductViewModel.Input) -> ProductViewModel.Output {
+        let activityIndicator = ActivityIndicator()
+        let errorTracker = ErrorTracker()
         
+        let loadMoreOutput = setupLoadMorePaging(loadTrigger: input.loadTrigger,
+                                                 getItems: useCase.getProductList,
+                                                 refreshTrigger: input.reloadTrigger,
+                                                 refreshItems: useCase.getProductList,
+                                                 loadMoreTrigger: input.loadMoreTrigger,
+                                                 loadMoreItems: useCase.loadMoreProductList)
+        let (page, fetchItems, loadError, loading, refreshing, loadingMore) = loadMoreOutput
+        
+        let productList = page.map({ $0.items.map({ ProductModel(product: $0)})}).asDriverOnErrorJustComplete()
+        let isEmptyData = Driver.combineLatest(productList, loading).filter({ !$0.1 }).map({ $0.0.isEmpty })
+        return Output(
+            error: loadError,
+            loading: loading,
+            refreshing: refreshing,
+            loadingMore: loadingMore,
+            fetchItems: fetchItems,
+            productList: productList,
+            isEmptyData: isEmptyData)
     }
 }

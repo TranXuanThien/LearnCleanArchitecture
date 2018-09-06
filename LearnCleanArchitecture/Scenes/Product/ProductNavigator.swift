@@ -6,14 +6,15 @@
 //  Copyright © 2018 tran.xuan.thien. All rights reserved.
 //
 
-protocol ProductsNavigatorType {
+protocol ProductNavigatorType {
     func toProductDetail(product: Product)
 }
 
-struct ProductsNavigator: ProductsNavigatorType {
+struct ProductNavigator: ProductNavigatorType {
+    unowned let assembler: Assembler
+    unowned let navigationController: UINavigationController
+    
     func toProductDetail(product: Product) {
         
     }
-    
-    
 }

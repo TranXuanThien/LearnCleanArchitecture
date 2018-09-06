@@ -8,14 +8,14 @@
 
 import UIKit
 
-protocol ProductsAssembler {
+protocol ProductAssembler {
     func resolve(navigationController: UINavigationController) -> ProductViewController
     func resolve(navigationController: UINavigationController) -> ProductViewModel
-    func resolve(navigationController: UINavigationController) -> ProductsNavigatorType
+    func resolve(navigationController: UINavigationController) -> ProductNavigatorType
     func resolve() -> ProductUseCaseType
 }
 
-extension ProductsAssembler {
+extension ProductAssembler {
     func resolve(navigationController: UINavigationController) -> ProductViewController {
         let vc = ProductViewController.instantiate()
         let vm: ProductViewModel = resolve(navigationController: navigationController)
@@ -24,18 +24,16 @@ extension ProductsAssembler {
     }
     
     func resolve(navigationController: UINavigationController) -> ProductViewModel {
-        return ProductsViewModel(
-            navigator: resolve(navigationController: navigationController),
-            useCase: resolve()
+        return ProductViewModel(navigator: resolve(navigationController: navigationController), useCase: resolve()
         )
     }
 }
 
-extension ProductsAssembler where Self: DefaultAssembler {
+extension ProductAssembler where Self: DefaultAssembler {
     func resolve(navigationController: UINavigationController) -> ProductNavigatorType {
         return ProductNavigator(assembler: self, navigationController: navigationController)
     }
-    
+
     func resolve() -> ProductUseCaseType {
         return ProductUseCase(productRepository: resolve())
     }

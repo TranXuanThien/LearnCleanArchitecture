@@ -8,14 +8,31 @@
 
 import UIKit
 
-class ProductCell: UITableViewCell {
+class ProductCell: UITableViewCell, NibReusable {
 
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var priceLabel: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
     }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        configView(with: nil)
+    }
+    
+    func configView(with model: ProductViewModel.ProductModel?) {
+        if let model = model {
+            nameLabel.text = model.product.name
+            priceLabel.text = String(model.product.price)
+        } else {
+            nameLabel.text = ""
+            priceLabel.text = ""
+        }
+    }
+    
     @IBAction func editAction(_ sender: Any) {
     }
     
